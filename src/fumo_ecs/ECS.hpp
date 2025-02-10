@@ -1,9 +1,9 @@
 #ifndef ECS_HPP 
 #define ECS_HPP 
-#include "ecs_hell/component_manager.hpp"
-#include "ecs_hell/constants_using.hpp"
-#include "ecs_hell/entity_manager.hpp"
-#include "ecs_hell/system_manager.hpp"
+#include "component_manager.hpp"
+#include "constants_using.hpp"
+#include "entity_manager.hpp"
+#include "system_manager.hpp"
 #include <memory>
 class ECS {
   private:

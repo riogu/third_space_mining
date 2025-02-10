@@ -1,5 +1,5 @@
 #include "constants.hpp"
-#include "ecs_hell/global_state.hpp"
+#include "fumo_ecs/global_state.hpp"
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -11,12 +11,14 @@ int main(void) {
     global->initialize();
 
     SetTargetFPS(60);
+    int count = 0;
+    int counted = 4;
     while (!WindowShouldClose()) {
         ClearBackground(BLACK);
         BeginDrawing();
 
         global->frametime = GetFrameTime();
-        global->run_systems();
+        global->ECS.run_systems();
 
         EndDrawing();
     }
@@ -26,7 +28,3 @@ int main(void) {
 
     return 0;
 }
-
-
-
-

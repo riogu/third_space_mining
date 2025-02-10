@@ -1,23 +1,10 @@
 #ifndef SYSTEM_MANAGER_HPP
 #define SYSTEM_MANAGER_HPP
-#include "constants_using.hpp"
-#include <cstdlib>
 #include <libassert/assert.hpp>
-#include <memory>
-#include <set>
 #include <string_view>
 #include <unordered_map>
+#include "system_base.hpp"
 
-class System {
-    // all systems should inherit from this system
-
-  public:
-    std::set<EntityId> sys_entities{};
-    // sys_call is a generic method, required to sort systems by priority at the end.
-    // it is necessary to work around this method by storing variables in the system
-    // if needed for subsequent function calls
-    virtual void sys_call() = 0;
-};
 
 class SystemManager {
   private:
@@ -51,7 +38,7 @@ class SystemManager {
   public:
     // TODO: maybe remove these extra public private later
 
-    std::shared_ptr<System> get_system(std::string_view t_name) {
+    [[nodiscard]] std::shared_ptr<System> get_system(std::string_view t_name) {
         return all_systems[t_name];
     }
     // template<typename T> // will i use this? not sure (consider deleting)
