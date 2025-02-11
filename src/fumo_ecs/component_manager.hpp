@@ -2,10 +2,8 @@
 #define COMPONENT_MANAGER_HPP
 #include "component_array.hpp"
 #include "constants_using.hpp"
-#include "system_manager.hpp"
 #include <memory>
-#include <type_traits>
-
+#include "system_base.hpp"
 #endif
 
 class ComponentManager {

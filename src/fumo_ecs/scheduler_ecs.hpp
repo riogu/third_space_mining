@@ -3,6 +3,7 @@
 #include "ECS.hpp"
 #include "fumo_ecs/constants_using.hpp"
 #include <memory>
+#include "entity_query.hpp"
 //
 //--------------------------------------------------------------------------------------
 //
@@ -61,6 +62,22 @@ class SchedulerECS {
         ecs->destroy_entity(entity_id);
         // all_entity_ids_debug[entity_id] = -1;
     }
+    // get all matching entities for these types 
+    // template<typename ...Types>
+    // [[nodiscard]] EntityId get_entities() {
+    //     ComponentMask component_mask = make_component_mask<Types...>();
+    // }
+    // template<typename ...Types>
+    // [[nodiscard]] EntityId get_entity() {
+    //     ComponentMask component_mask = make_component_mask<Types...>();
+    // }
+    // // useful when we know we only have one entity or are looking for a flag struct
+    // template<typename T>
+    // [[nodiscard]] EntityId get_flagged_entity() {
+    //
+    //     ComponentMask component_mask = 0;
+    //     component_mask |= get_component_id<T>();
+    // }
     // --------------------------------------------------------------------------------------
 
     // --------------------------------------------------------------------------------------
@@ -93,24 +110,24 @@ class SchedulerECS {
     // --------------------------------------------------------------------------------------
     // system stuff
     template<typename T, Priority priority, typename... Types>
-    void register_system(ComponentMask component_mask, Types&... args) {
+    void register_system(EntityQuery entity_query, Types&... args) {
 
         DEBUG_ASSERT(system_scheduler[priority] == nullptr, "already used this priority.",
                      system_scheduler);
 
         std::shared_ptr<T> system_ptr = std::make_shared<T>(args...);
-        ecs->register_system<T>(component_mask, system_ptr);
+        ecs->register_system<T>(entity_query, system_ptr);
 
         system_scheduler[priority] = system_ptr;
         current_max_priority++;
         // return system_ptr;
     }
 
-    // WARNING: this system wont be ran in run_systems() call
+    // WARNING: this system wont be called in run_systems() call
     template<typename T, typename... Types>
-    void register_system_unscheduled(ComponentMask component_mask, Types&... args) {
+    void register_system_unscheduled(EntityQuery entity_query, Types&... args) {
         std::shared_ptr<T> system_ptr = std::make_shared<T>(args...);
-        ecs->register_system<T>(component_mask, system_ptr);
+        ecs->register_system<T>(entity_query, system_ptr);
         // return system_ptr;
     }
 

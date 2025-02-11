@@ -1,5 +1,6 @@
 // #include "constants.hpp"
 // #include "fumo_ecs/constants_using.hpp"
+// #include "fumo_ecs/entity_query.hpp"
 // #include "fumo_ecs/global_state.hpp"
 // #include "old_objects/components.hpp"
 // #include "old_objects/systems.hpp"
@@ -14,13 +15,12 @@
 //     global->ECS.register_component<CircleShape>();
 //
 //     // added component mask methods (takes any component type)
-//     ComponentMask component_mask =
-//         global->ECS.make_component_mask<Body, Render, CircleShape>();
-//     global->ECS.register_system<CirclePhysicsUpdate, 0>(component_mask);
-//
-//     // alternatively do this
-//     global->ECS.register_system<class DrawCircle, 1>(
-//         global->ECS.make_component_mask<Body, Render, CircleShape>());
+//     global->ECS.register_system<CirclePhysicsUpdate, 0>(EntityQuery{
+//         .component_mask = global->ECS.make_component_mask<Body, Render, CircleShape>(),
+//         .component_filter = Filter::All});
+//     global->ECS.register_system<class DrawCircle, 1>(EntityQuery{
+//         .component_mask = global->ECS.make_component_mask<Body, Render, CircleShape>(),
+//         .component_filter = Filter::All});
 //
 //     make_lots_of_entities_test();
 // }
@@ -48,11 +48,11 @@
 //     global->ECS.entity_add_component(entity_id, CircleShape{.radius = radius});
 //     return entity_id;
 // }
-//     // old comments, might delete, seems to be solved
-//     // cant register the systems effectively until ive made a system
-//     // that allows me to pass to them the variables i want for their function.
-//     // this means that a good solution is treating them the same as components
-//     // and require an initialization like a component requires
-//     // and i will now copy over the components code for systems
-//     // and then maybe later we can make system entities and separate both logics
-//     // and have a nice finished system.
+// // old comments, might delete, seems to be solved
+// // cant register the systems effectively until ive made a system
+// // that allows me to pass to them the variables i want for their function.
+// // this means that a good solution is treating them the same as components
+// // and require an initialization like a component requires
+// // and i will now copy over the components code for systems
+// // and then maybe later we can make system entities and separate both logics
+// // and have a nice finished system.

@@ -3,6 +3,7 @@
 #include "component_manager.hpp"
 #include "constants_using.hpp"
 #include "entity_manager.hpp"
+#include "fumo_ecs/entity_query.hpp"
 #include "system_manager.hpp"
 #include <memory>
 class ECS {
@@ -85,14 +86,14 @@ class ECS {
     // --------------------------------------------------------------------------------------
     // system stuff
     template<typename T>
-    void register_system(const ComponentMask& component_mask,
+    void register_system(EntityQuery& entity_query,
                          const std::shared_ptr<T>& system_ptr) {
-        system_manager->register_system<T>(component_mask, system_ptr);
+        system_manager->register_system<T>(entity_query, system_ptr);
     }
 
     template<typename T>
-    void set_system_component_mask(ComponentMask component_mask) {
-        system_manager->set_component_mask<T>(component_mask);
+    void set_system_entity_query(ComponentMask component_mask) {
+        system_manager->set_entity_query<T>(component_mask);
     }
 
     [[nodiscard]] std::shared_ptr<System> get_system(std::string_view type_name) {

@@ -36,6 +36,27 @@ class EntityManager {
         available_entity_ids.push(entity_id);
         living_entity_count--;
     }
+    // TODO: decide if we want to implement getter methods or not
+    //
+    // [[nodiscard]] EntityId get_entities(ComponentMask component_mask) {
+    //
+    // }
+    // [[nodiscard]] EntityId get_entity(ComponentMask component_mask) {
+    //
+    // }
+    // useful when we know we only have one entity or are looking for a flag struct
+    // [[nodiscard]] EntityId get_flagged_entity(ComponentMask component_mask) {
+    //     EntityId return_id = NO_ENTITY_FOUND;
+    //     for (EntityId entity_id = 0; entity_id < living_entity_count; entity_id++) {
+    //         if (has_all_components(entity_component_masks[entity_id], component_mask)) {
+    //             return entity_id;
+    //         }
+    //     }
+    //     DEBUG_ASSERT(1 > 2, "no entity exists with this flag.", component_mask);
+    //     return NO_ENTITY_FOUND;
+    // }
+
+
     // NOTE: entity manager is *NOT* responsible for changing component_masks
     void add_to_component_mask(EntityId entity_id, ComponentId component_id) {
         DEBUG_ASSERT(living_entity_count < MAX_ENTITY_IDS , "too many living entities");
