@@ -1,7 +1,7 @@
 #ifndef ENTITY_MANAGER_HPP
 #define ENTITY_MANAGER_HPP
 #include "constants_using.hpp"
-#include "fumo_ecs/component_array.hpp"
+#include "fumo_engine/component_array.hpp"
 #include <array>
 #include <libassert/assert.hpp>
 #include <cstdint>

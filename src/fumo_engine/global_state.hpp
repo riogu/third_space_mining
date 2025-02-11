@@ -3,7 +3,7 @@
 #include "scheduler_ecs.hpp"
 
 class GlobalState {
-public:
+  public:
     // NOTE: I merged the scheduler with the ECS so we can separate game specific global
     // state i dont want to rewrite access functions so SchedulerECS is accessed directly
     float frametime;

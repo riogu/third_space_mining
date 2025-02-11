@@ -3,7 +3,7 @@
 #include "component_manager.hpp"
 #include "constants_using.hpp"
 #include "entity_manager.hpp"
-#include "fumo_ecs/entity_query.hpp"
+#include "fumo_engine/entity_query.hpp"
 #include "system_manager.hpp"
 #include <memory>
 class ECS {
@@ -13,9 +13,6 @@ class ECS {
     std::unique_ptr<SystemManager> system_manager;
 
   public:
-    // NOTE: possibly change this into a wrapper around entities so we can can call:
-    // entity.add_component(component);
-
     void initialize() {
         entity_manager = std::make_unique<EntityManager>();
         component_manager = std::make_unique<ComponentManager>();
