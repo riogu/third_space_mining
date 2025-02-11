@@ -1,5 +1,6 @@
 #include "fumo_engine/global_state.hpp"
 #include "objects/components.hpp"
+#include "objects/physics_systems.hpp"
 #include "objects/systems.hpp"
 
 extern std::unique_ptr<GlobalState> global;
@@ -33,5 +34,9 @@ void register_systems() {
 
     global->ECS.register_system_unscheduled<PlanetFactory>(
         EntityQuery{.component_mask = 0, .component_filter = Filter::Only});
+
+    global->ECS.register_system<CirclePhysicsUpdate, 2>(EntityQuery{
+        .component_mask = global->ECS.make_component_mask<Body, Render, CircleShape>(),
+        .component_filter = Filter::Only});
 }
 void create_entities() {}

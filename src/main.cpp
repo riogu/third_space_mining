@@ -16,9 +16,6 @@ int main(void) {
     register_all_to_ECS();
 
     SetTargetFPS(144);
-    // ecs_test();
-    // int count = 0;
-    // int counted = 4;
     while (!WindowShouldClose()) {
         ClearBackground(BLACK);
         BeginDrawing();
@@ -26,12 +23,6 @@ int main(void) {
         global->frametime = GetFrameTime();
         global->ECS.run_systems();
 
-        // count++;
-        // if (count % 10 == 0) [[likely]] {
-        //     counted++;
-        //     TraceLog(LOG_DEBUG, "entity count: %d", counted);
-        //     add_an_entity();
-        // }
         EndDrawing();
     }
     //--------------------------------------------------------------------------------------
