@@ -1,6 +1,6 @@
+#include "physics_systems.hpp"
 #include "../constants.hpp"
 #include "fumo_engine/global_state.hpp"
-#include "physics_systems.hpp"
 #include "main_functions.hpp"
 #include "objects/components.hpp"
 #include "raymath.h"
@@ -86,8 +86,9 @@ void CirclePhysicsUpdate::update_position() {
     }
 }
 
-void CirclePhysicsUpdate::solve_collision_aux(Body& body, Body& other_body, CircleShape& shape,
-                         CircleShape& other_shape) {
+void CirclePhysicsUpdate::solve_collision_aux(Body& body, Body& other_body,
+                                              CircleShape& shape,
+                                              CircleShape& other_shape) {
     // find new velocity vectors
     float distance = Vector2Distance(other_body.position, body.position);
 

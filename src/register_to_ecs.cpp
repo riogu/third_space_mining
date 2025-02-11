@@ -40,3 +40,4 @@ void register_systems() {
         .component_filter = Filter::Only});
 }
 void create_entities() {}
+

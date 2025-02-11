@@ -38,9 +38,9 @@ class SchedulerECS {
     std::array<std::shared_ptr<System>, MAX_SYSTEMS> unscheduled_systems{};
     std::unique_ptr<ECS> ecs;
     Priority current_max_priority{};
-    // std::array<EntityId, MAX_ENTITY_IDS> all_entity_ids_debug{};
 
   public:
+    std::array<EntityId, MAX_ENTITY_IDS> all_entity_ids_debug{};
     void initialize() {
         ecs = std::make_unique<ECS>();
         ecs->initialize();
@@ -52,7 +52,7 @@ class SchedulerECS {
         // the end of the frame, can remove later
         EntityId entity_id = ecs->create_entity();
         // scheduler.entities_to_create.insert(entity_id);
-        // all_entity_ids_debug[entity_id] = entity_id;
+        all_entity_ids_debug[entity_id] = entity_id;
         return entity_id;
     };
 
@@ -60,7 +60,7 @@ class SchedulerECS {
         // schedule deletion for the end of the frame
         // scheduler.entities_to_destroy.insert(entity_id);
         ecs->destroy_entity(entity_id);
-        // all_entity_ids_debug[entity_id] = -1;
+        all_entity_ids_debug[entity_id] = -1;
     }
     // get all matching entities for these types 
     // template<typename ...Types>

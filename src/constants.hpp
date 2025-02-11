@@ -4,7 +4,7 @@
 #include "raylib.h"
 // const int particle_count = 50;
 
-const int screenWidth = 1000;
+const int screenWidth = 1500;
 const int screenHeight = 1000;
 const Vector2 screenCenter = {(float)screenWidth / 2, (float)screenHeight / 2};
 #define GRAVITY 9.81

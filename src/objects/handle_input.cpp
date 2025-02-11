@@ -15,9 +15,9 @@ void HandleInputLevelEditor::handle_input() {
     } else if (IsKeyPressed(KEY_D)) {
         delete_planet();
     } else if (IsKeyPressed(KEY_R)) {
-        resize_planet(2.0f);
-    } else if (IsKeyPressed(KEY_E)) {
         resize_planet(0.5f);
+    } else if (IsKeyPressed(KEY_E)) {
+        resize_planet(2.0f);
     }
 }
 void HandleInputLevelEditor::spawn_planet() {
@@ -36,6 +36,7 @@ void HandleInputLevelEditor::resize_planet(float resize) {
         float distance = Vector2Distance(mouse_position, body.position);
         if (mouse_radius + circle_shape.radius > distance) {
             circle_shape.radius /= resize;
+            body.mass *= resize * resize * resize * resize;
         }
     }
 }
@@ -61,7 +62,7 @@ void HandleInputLevelEditor::move_planet() {
         if (mouse_radius + circle_shape.radius > distance) {
             auto body_movement_ptr = global->ECS.get_system<BodyMovement>();
             body_movement_ptr->move_towards_position(body, GetMousePosition());
-            // FIXME: dont update the position here
+            // FIXME: think if its okay to update position here
             body.position += body.velocity * global->frametime;
         }
     }
