@@ -7,7 +7,6 @@
 // clang-format on
 extern std::unique_ptr<GlobalState> global;
 
-
 void HandleInputLevelEditor::handle_input() {
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
         move_planet();
@@ -15,9 +14,9 @@ void HandleInputLevelEditor::handle_input() {
         spawn_planet();
     } else if (IsKeyPressed(KEY_D)) {
         delete_planet();
-    } else if (IsKeyPressed(KEY_R) && IsKeyPressed(KEY_LEFT_SHIFT)) {
-        resize_planet(2.0f);
     } else if (IsKeyPressed(KEY_R)) {
+        resize_planet(2.0f);
+    } else if (IsKeyPressed(KEY_E)) {
         resize_planet(0.5f);
     }
 }
@@ -62,6 +61,7 @@ void HandleInputLevelEditor::move_planet() {
         if (mouse_radius + circle_shape.radius > distance) {
             auto body_movement_ptr = global->ECS.get_system<BodyMovement>();
             body_movement_ptr->move_towards_position(body, GetMousePosition());
+        body.position += body.velocity * global->frametime;
         }
     }
 }

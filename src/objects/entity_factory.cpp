@@ -4,7 +4,6 @@
 #include "raymath.h"
 #include "systems.hpp"
 extern std::unique_ptr<GlobalState> global;
-
 EntityId PlanetFactory::create_planet(float radius, float mass, Vector2 velocity,
                                       Vector2 position, Color color) {
     EntityId entity_id = global->ECS.create_entity();

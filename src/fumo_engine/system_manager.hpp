@@ -16,7 +16,7 @@ class SystemManager {
 
   public:
     template<typename T>
-    void register_system(EntityQuery& entity_query,
+    void register_system(const EntityQuery& entity_query,
                          const std::shared_ptr<System>& system_ptr) {
         std::string_view t_name = libassert::type_name<T>();
         DEBUG_ASSERT(!all_systems.contains(t_name), "registered the system twice.",
@@ -28,7 +28,7 @@ class SystemManager {
 
   private:
     template<typename T>
-    void set_entity_query(EntityQuery& entity_query) {
+    void set_entity_query(const EntityQuery& entity_query) {
         std::string_view t_name = libassert::type_name<T>();
         DEBUG_ASSERT(all_systems.contains(t_name),
                      "tried using system without registering!", all_systems);

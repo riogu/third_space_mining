@@ -83,8 +83,8 @@ class ECS {
     // --------------------------------------------------------------------------------------
     // system stuff
     template<typename T>
-    void register_system(EntityQuery& entity_query,
-                         const std::shared_ptr<T>& system_ptr) {
+    void register_system(const EntityQuery& entity_query,
+                          const std::shared_ptr<T>& system_ptr) {
         system_manager->register_system<T>(entity_query, system_ptr);
     }
 

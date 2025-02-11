@@ -1,8 +1,8 @@
 #ifndef SYSTEMS_HPP
 #define SYSTEMS_HPP
-#include "fumo_engine/constants_using.hpp"
 #include "fumo_engine/system_base.hpp"
 #include "objects/components.hpp"
+#include "raylib.h"
 
 // TODO: BodyMovement shouldnt be registered? (undecided atm)
 // SOLVED: created an unscheduled option in Scheduler
@@ -10,7 +10,10 @@ class BodyMovement : public System {
     // prefer making a body movement system, instead of
     // adding a move_towards() method to the Body component (follow ECS logic)
   public:
-    void sys_call() override;
+    // NOTE: you need to give a definition of sys_call() virtual method,
+    // otherwise the compiler wont allocate a vtable for this class,
+    // since it will treat it as virtual and not allow instantiations of it
+    void sys_call() override {};
     void move_towards(Body& body, Body& target);
     void move_towards_position(Body& body, Vector2 position);
 };
@@ -19,9 +22,10 @@ class HandleInput : public System {
     // generic interface aggregate for all input handling
   public:
     virtual ~HandleInput() = default;
+    void sys_call() override = 0;
 };
 
-class HandleInputLevelEditor : HandleInput {
+class HandleInputLevelEditor : public HandleInput {
   public:
     void sys_call() override { handle_input(); }
     void handle_input();
@@ -42,10 +46,20 @@ class EntityFactory : public System {
 };
 class PlanetFactory : public EntityFactory {
   public:
-    void sys_call() override;
+    void sys_call() override {};
     EntityId create_default_planet(Vector2 position);
-    EntityId create_planet(float radius, float mass, Vector2 velocity,
-                                   Vector2 position, Color color);
+    EntityId create_planet(float radius, float mass, Vector2 velocity, Vector2 position,
+                           Color color);
+};
+
+class Renderer : public System {
+  public:
+  virtual ~Renderer() = default;
+};
+class PlanetRenderer : public Renderer {
+  public:
+    void sys_call() override { draw_planet(); };
+    void draw_planet();
 };
 
 #endif
