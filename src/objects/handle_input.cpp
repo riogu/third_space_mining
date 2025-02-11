@@ -37,6 +37,7 @@ void HandleInputLevelEditor::resize_planet(float resize) {
         if (mouse_radius + circle_shape.radius > distance) {
             circle_shape.radius /= resize;
             body.mass *= resize * resize * resize * resize;
+            return;
         }
     }
 }
@@ -49,6 +50,7 @@ void HandleInputLevelEditor::delete_planet() {
         float distance = Vector2Distance(mouse_position, body.position);
         if (mouse_radius + circle_shape.radius > distance) {
             global->ECS.destroy_entity(entity_id);
+            return;
         }
     }
 }
@@ -64,6 +66,7 @@ void HandleInputLevelEditor::move_planet() {
             body_movement_ptr->move_towards_position(body, GetMousePosition());
             // FIXME: think if its okay to update position here
             body.position += body.velocity * global->frametime;
+            return;
         }
     }
 }
