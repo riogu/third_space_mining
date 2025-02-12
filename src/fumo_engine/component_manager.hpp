@@ -1,7 +1,9 @@
 #ifndef COMPONENT_MANAGER_HPP
 #define COMPONENT_MANAGER_HPP
 #include "component_array.hpp"
-#include "constants_using.hpp"
+#include "constants.hpp"
+#include "engine_constants.hpp"
+#include <iostream>
 #include <memory>
 #include "system_base.hpp"
 #endif
@@ -78,6 +80,7 @@ class ComponentManager {
             std::static_pointer_cast<ComponentArray<T>>(component_arrays[t_name]);
         cast_component_array->remove_component_data(entity_id);
     }
+
     void notify_destroyed_entity(EntityId entity_id) {
         // erases destroyed entity from all sets
         for (auto const& pair : component_arrays) {
@@ -86,5 +89,8 @@ class ComponentManager {
             // (simplifying the implementation so i dont go insane)
             component_array->entity_destroyed(entity_id);
         }
+    }
+    void debug_print() {
+        PRINT(component_arrays);
     }
 };

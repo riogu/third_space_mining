@@ -1,10 +1,10 @@
 #ifndef ENTITY_MANAGER_HPP
 #define ENTITY_MANAGER_HPP
-#include "constants_using.hpp"
-#include "fumo_engine/component_array.hpp"
+#include "constants.hpp"
+#include "engine_constants.hpp"
 #include <array>
-#include <libassert/assert.hpp>
 #include <cstdint>
+#include <libassert/assert.hpp>
 #include <queue>
 // Entities are represented by unique IDs
 
@@ -22,13 +22,15 @@ class EntityManager {
         }
     }
     EntityId create_entity() {
-        DEBUG_ASSERT(living_entity_count < MAX_ENTITY_IDS , "too many living entities", living_entity_count);
+        living_entity_count++;
+        DEBUG_ASSERT(living_entity_count < MAX_ENTITY_IDS, "too many living entities",
+                     living_entity_count);
         EntityId id = available_entity_ids.front();
         available_entity_ids.pop();
         return id;
     }
     void destroy_entity(EntityId entity_id) {
-        DEBUG_ASSERT(entity_id < MAX_ENTITY_IDS , "exceeded MAX_ENTITY_IDS");
+        DEBUG_ASSERT(entity_id < MAX_ENTITY_IDS, "exceeded MAX_ENTITY_IDS");
         // reset this entity component
         entity_component_masks[entity_id] = 0;
 
@@ -48,7 +50,8 @@ class EntityManager {
     // [[nodiscard]] EntityId get_flagged_entity(ComponentMask component_mask) {
     //     EntityId return_id = NO_ENTITY_FOUND;
     //     for (EntityId entity_id = 0; entity_id < living_entity_count; entity_id++) {
-    //         if (has_all_components(entity_component_masks[entity_id], component_mask)) {
+    //         if (has_all_components(entity_component_masks[entity_id], component_mask))
+    //         {
     //             return entity_id;
     //         }
     //     }
@@ -56,16 +59,15 @@ class EntityManager {
     //     return NO_ENTITY_FOUND;
     // }
 
-
     // NOTE: entity manager is *NOT* responsible for changing component_masks
     void add_to_component_mask(EntityId entity_id, ComponentId component_id) {
-        DEBUG_ASSERT(living_entity_count < MAX_ENTITY_IDS , "too many living entities");
-        DEBUG_ASSERT(entity_id < MAX_ENTITY_IDS , "exceeded MAX_ENTITY_IDS");
+        DEBUG_ASSERT(living_entity_count < MAX_ENTITY_IDS, "too many living entities");
+        DEBUG_ASSERT(entity_id < MAX_ENTITY_IDS, "exceeded MAX_ENTITY_IDS");
         entity_component_masks[entity_id] |= 1 << component_id;
     }
     void remove_from_component_mask(EntityId entity_id, ComponentId component_id) {
-        DEBUG_ASSERT(living_entity_count < MAX_ENTITY_IDS , "too many living entities");
-        DEBUG_ASSERT(entity_id < MAX_ENTITY_IDS , "exceeded MAX_ENTITY_IDS");
+        DEBUG_ASSERT(living_entity_count < MAX_ENTITY_IDS, "too many living entities");
+        DEBUG_ASSERT(entity_id < MAX_ENTITY_IDS, "exceeded MAX_ENTITY_IDS");
         // XOR makes it so if both bits are 1 then it turns into a 0,
         DEBUG_ASSERT(entity_component_masks[entity_id] && component_id == 0,
                      "component wasn't in the mask", entity_component_masks[entity_id]);
@@ -75,6 +77,10 @@ class EntityManager {
     [[nodiscard]] ComponentMask get_component_mask(EntityId entity_id) {
         DEBUG_ASSERT(entity_id < MAX_ENTITY_IDS, "exceeded MAX_ENTITY_IDS");
         return entity_component_masks[entity_id];
+    }
+    void debug_print() {
+        PRINT(living_entity_count);
+        PRINT(available_entity_ids);
     }
 };
 #endif

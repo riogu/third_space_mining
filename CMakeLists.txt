@@ -49,8 +49,8 @@ if(USE_LIBASSERT)
     set(dep libassert)
     add_git_dependency(
         ${dep}
-        https://github.com/jeremy-rifkin/libassert.git
-        v2.1.4
+        https://github.com/riogu/libassert.git
+        3b17c57c450d68ebee23cfa70adb4c55081032c1
     )
     include_directories(RECURSE build/_deps/libassert-src/src)
     list(APPEND LIBRARIES libassert::assert)

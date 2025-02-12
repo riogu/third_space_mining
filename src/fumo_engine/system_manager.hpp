@@ -1,7 +1,9 @@
 #ifndef SYSTEM_MANAGER_HPP
 #define SYSTEM_MANAGER_HPP
+#include "constants.hpp"
 #include "fumo_engine/entity_query.hpp"
 #include "system_base.hpp"
+#include <iostream>
 #include <libassert/assert.hpp>
 #include <string_view>
 #include <unordered_map>
@@ -19,6 +21,7 @@ class SystemManager {
     void register_system(const EntityQuery& entity_query,
                          const std::shared_ptr<System>& system_ptr) {
         std::string_view t_name = libassert::type_name<T>();
+
         DEBUG_ASSERT(!all_systems.contains(t_name), "registered the system twice.",
                      all_systems);
         all_systems.insert({t_name, system_ptr});
@@ -73,5 +76,6 @@ class SystemManager {
             }
         }
     }
+    void debug_print() { PRINT(all_systems); }
 };
 #endif

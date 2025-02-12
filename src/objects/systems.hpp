@@ -35,6 +35,7 @@ class HandleInputLevelEditor : public HandleInput {
     void move_planet();
     void delete_planet();
     void resize_planet(float resize);
+    void debug_print();
 };
 
 // NOTE: this is an interface for all factory spawner classes
@@ -54,12 +55,22 @@ class PlanetFactory : public EntityFactory {
 
 class Renderer : public System {
   public:
-  virtual ~Renderer() = default;
+    virtual ~Renderer() = default;
 };
 class PlanetRenderer : public Renderer {
   public:
     void sys_call() override { draw_planet(); };
     void draw_planet();
+};
+
+class Debugger : public System {
+    // not very used for now
+    // TODO: expand this class to allow for many kinds of debugging functions
+    // and common analysis of game state (like printing entities every 10 seconds)
+    // (or like targetting specific parts of the ECS)
+
+    void sys_call() override { global_debug(); };
+    void global_debug();
 };
 
 #endif

@@ -1,5 +1,6 @@
 // clang-format off
 #include "../constants.hpp"
+#include "fumo_engine/component_array.hpp"
 #include "fumo_engine/global_state.hpp"
 #include "systems.hpp"
 #include "raylib.h"
@@ -18,8 +19,11 @@ void HandleInputLevelEditor::handle_input() {
         resize_planet(0.5f);
     } else if (IsKeyPressed(KEY_E)) {
         resize_planet(2.0f);
+    } else if (IsKeyPressed(KEY_ONE)) {
+        debug_print();
     }
 }
+void HandleInputLevelEditor::debug_print() { global->debug_prints(); }
 void HandleInputLevelEditor::spawn_planet() {
     Vector2 mouse_position = GetMousePosition();
     DrawCircleLinesV(mouse_position, mouse_radius, GREEN);

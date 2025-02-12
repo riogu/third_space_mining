@@ -1,8 +1,9 @@
 #ifndef ECS_HPP 
 #define ECS_HPP 
 #include "component_manager.hpp"
-#include "constants_using.hpp"
+#include "engine_constants.hpp"
 #include "entity_manager.hpp"
+#include "fumo_engine/component_array.hpp"
 #include "fumo_engine/entity_query.hpp"
 #include "system_manager.hpp"
 #include <memory>
@@ -98,6 +99,12 @@ class ECS {
     }
 
     // --------------------------------------------------------------------------------------
+    void debug_print() {
+
+        component_manager->debug_print();
+        entity_manager->debug_print();
+        system_manager->debug_print();
+    }
 };
 
 #endif

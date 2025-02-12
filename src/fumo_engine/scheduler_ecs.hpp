@@ -1,9 +1,12 @@
 #ifndef SCHEDULER_ECS_HPP
 #define SCHEDULER_ECS_HPP
 #include "ECS.hpp"
-#include "fumo_engine/constants_using.hpp"
-#include <memory>
+#include "constants.hpp"
 #include "entity_query.hpp"
+#include "fumo_engine/component_array.hpp"
+#include "fumo_engine/engine_constants.hpp"
+#include <iostream>
+#include <memory>
 //
 //--------------------------------------------------------------------------------------
 //
@@ -31,7 +34,7 @@ class SchedulerECS {
     // only missing separating systems from the entities and components
     // and running all the systems at the end
     // but i think as long as i dont touch the systems, they dont communicate with EC
-    // part so it should be trivial?
+    // part so it should be trivials
 
   private:
     std::array<std::shared_ptr<System>, MAX_SYSTEMS> system_scheduler{};
@@ -60,9 +63,9 @@ class SchedulerECS {
         // schedule deletion for the end of the frame
         // scheduler.entities_to_destroy.insert(entity_id);
         ecs->destroy_entity(entity_id);
-        all_entity_ids_debug[entity_id] = -1;
+        all_entity_ids_debug[entity_id] = NO_ENTITY_FOUND;
     }
-    // get all matching entities for these types 
+    // get all matching entities for these types
     // template<typename ...Types>
     // [[nodiscard]] EntityId get_entities() {
     //     ComponentMask component_mask = make_component_mask<Types...>();
@@ -151,6 +154,11 @@ class SchedulerECS {
         ComponentMask component_mask = 0;
         (add_id_to_component_mask<Types>(component_mask), ...);
         return component_mask;
+    }
+
+    void debug_print() {
+        PRINT(all_entity_ids_debug);
+        ecs->debug_print();
     }
 
   private:
