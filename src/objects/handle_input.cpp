@@ -48,8 +48,15 @@ void HandleInputLevelEditor::resize_planet(float resize) {
         float distance = Vector2Distance(mouse_position, body.position);
         if (mouse_radius + circle_shape.radius > distance) {
             circle_shape.radius *= resize;
+
+            // hard coded fixes for smoother interaction
             resize = std::pow(resize, 8);
-            body.mass *= resize;
+            float max_resize = 900000000.0f;
+            float new_mass = body.mass * resize;
+            if (new_mass > max_resize) new_mass = max_resize;
+
+            body.mass = new_mass;
+
             return;
         }
     }
