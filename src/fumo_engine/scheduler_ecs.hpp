@@ -5,7 +5,6 @@
 #include "entity_query.hpp"
 #include "fumo_engine/component_array.hpp"
 #include "fumo_engine/engine_constants.hpp"
-#include <iostream>
 #include <memory>
 //
 //--------------------------------------------------------------------------------------

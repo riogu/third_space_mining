@@ -1,5 +1,6 @@
 #ifndef SYSTEMS_HPP
 #define SYSTEMS_HPP
+#include "fumo_engine/engine_constants.hpp"
 #include "fumo_engine/system_base.hpp"
 #include "objects/components.hpp"
 #include "raylib.h"
@@ -34,6 +35,7 @@ class HandleInputLevelEditor : public HandleInput {
     void spawn_planet();
     void move_planet();
     void delete_planet();
+    void delete_all_planets();
     void resize_planet(float resize);
     void debug_print();
 };

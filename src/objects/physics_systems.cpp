@@ -6,8 +6,6 @@
 #include "raymath.h"
 
 extern std::unique_ptr<GlobalState> global;
-void solve_collision_aux(Body& body, Body& other_body, CircleShape& shape,
-                         CircleShape& other_shape);
 void CirclePhysicsUpdate::update_velocity() {
 
     for (auto entity_id : sys_entities) {

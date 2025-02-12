@@ -1,10 +1,13 @@
+
 // clang-format off
 #include "../constants.hpp"
 #include "fumo_engine/component_array.hpp"
+#include "fumo_engine/engine_constants.hpp"
 #include "fumo_engine/global_state.hpp"
 #include "systems.hpp"
 #include "raylib.h"
 #include "raymath.h"
+#include <cmath>
 // clang-format on
 extern std::unique_ptr<GlobalState> global;
 
@@ -13,12 +16,17 @@ void HandleInputLevelEditor::handle_input() {
         move_planet();
     } else if (IsKeyPressed(KEY_S)) {
         spawn_planet();
+
+    } else if (IsKeyDown(KEY_LEFT_SHIFT)) {
+        if (IsKeyPressed(KEY_D)) {
+            delete_all_planets();
+        } else if (IsKeyPressed(KEY_R)) {
+            resize_planet(0.6666f);
+        }
     } else if (IsKeyPressed(KEY_D)) {
         delete_planet();
     } else if (IsKeyPressed(KEY_R)) {
-        resize_planet(0.5f);
-    } else if (IsKeyPressed(KEY_E)) {
-        resize_planet(2.0f);
+        resize_planet(1.5f);
     } else if (IsKeyPressed(KEY_ONE)) {
         debug_print();
     }
@@ -39,8 +47,9 @@ void HandleInputLevelEditor::resize_planet(float resize) {
         auto& circle_shape = global->ECS.get_component<CircleShape>(entity_id);
         float distance = Vector2Distance(mouse_position, body.position);
         if (mouse_radius + circle_shape.radius > distance) {
-            circle_shape.radius /= resize;
-            body.mass *= resize * resize * resize * resize;
+            circle_shape.radius *= resize;
+            resize = std::pow(resize, 8);
+            body.mass *= resize;
             return;
         }
     }
@@ -58,6 +67,12 @@ void HandleInputLevelEditor::delete_planet() {
         }
     }
 }
+void HandleInputLevelEditor::delete_all_planets() {
+    for (auto entity_id : sys_entities) {
+        global->ECS.destroy_entity(entity_id);
+    }
+}
+
 void HandleInputLevelEditor::move_planet() {
     Vector2 mouse_position = GetMousePosition();
     DrawCircleLinesV(mouse_position, mouse_radius, GREEN);

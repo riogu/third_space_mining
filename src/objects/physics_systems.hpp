@@ -25,7 +25,7 @@ class CirclePhysicsUpdate : public PhysicsUpdate {
 
   public:
     void sys_call() override {
-        // update_velocity();
+        update_velocity();
         detect_screen_collision();
         detect_collisions();
         update_position();
